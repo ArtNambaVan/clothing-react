@@ -1,0 +1,10 @@
+.page-wrapper {
+    position: fixed;
+    display: none;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    background: rgba($color: #000000, $alpha: 0.3);
+}

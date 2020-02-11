@@ -8,6 +8,7 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions'
+import PageWrapper from './components/page-wrapper/page-wrapper.component'
 
 import './App.css';
 
@@ -38,23 +39,27 @@ class App extends React.Component {
     componentWillUnmount() {
         this.unsubscribeFromAuth()
     }
-
+    
     render() {
         return (
-            <div>
+            <div className="page">
                 <Header/>
                 <Switch>
                     <Route exact path='/' component={HomePage}/>
                     <Route path='/shop' component={ShopPage}/>
-                    <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to="/" />) : (<SignInAndSignUpPage/>)}/>
+                    <Route exact path='/signin' render={() => {
+                        return this.props.currentUser ? (<Redirect to="/" />) : (<SignInAndSignUpPage/>)
+                    }}/>
                 </Switch>
+                <PageWrapper hidden={this.props.hidden}/>
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ user }) => ({
-    currentUser: user
+const mapStateToProps = ({ user, cart }) => ({
+    currentUser: user.currentUser,
+    hidden: cart.hidden
 })
 
 const mapDispatchToProps = dispatch => ({
